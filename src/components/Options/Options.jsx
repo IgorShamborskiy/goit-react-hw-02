@@ -1,16 +1,13 @@
 
 
-export default function Options(){
-    const handleClick = (event) =>{
-        console.log(`натиснув`);
-        console.log(event)
-    };
+export default function Options({onButton, total, reset }){
 return(
     <div>
-    <button onClick={()=>handleClick()}>Good</button>
-    <button onClick={()=>handleClick()}>Neutral</button>
-    <button onClick={()=>handleClick()}>Bad</button>
-    <button onClick={()=>handleClick()}>Reset</button>
+    <button onClick={()=>onButton("good")}>Good</button>
+    <button onClick={()=>onButton("neutral")}>Neutral</button>
+    <button onClick={()=>onButton("bad")}>Bad</button>
+    {total !== 0 && (
+    <button onClick={reset}>Reset</button>
+    )}
     </div>
-)
-}
+)}

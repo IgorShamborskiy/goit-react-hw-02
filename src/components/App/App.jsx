@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import {useEffect, useState } from 'react'
 import Options from '../Options/Options.jsx'
 import Description from '../Description/Description.jsx'
 import Feedback from '../Feedback/Feedback.jsx'
+import Notification  from '../Notification/Notification.jsx'
 
 
 
@@ -15,24 +16,42 @@ export default function App () {
       good: 0,
       neutral: 0,
       bad: 0,
-    }
-  }
-    );
-
-    const updateFeedback = (feedbackType) => {
-      setTypesFeedback({
-        ...typesFeedback,
-        [feedbackType]: typesFeedback[feedbackType] + 1,
-      });
     };
-    
+  });
+
+  useEffect(() => {
+    localStorage.setItem("feedbacks", JSON.stringify(typesFeedback));
+  }, [typesFeedback]);
+  
+  const updateFeedback = (feedbackType) => {
+    setTypesFeedback({
+      ...typesFeedback,
+      [feedbackType]: typesFeedback[feedbackType] + 1,
+    });
+  };
+  
+  const resetFeedback = () => {
+    setTypesFeedback({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  };
+
+  const { good, neutral, bad } = typesFeedback;
+  const totalFeedback = good + neutral + bad;
+
+
   return (
     <>
     <Description/>
-      <Options
-       onButton={updateFeedback}
+      <Options onButton={updateFeedback} total={totalFeedback} reset={resetFeedback}
        />
-      <Feedback />
+      {totalFeedback === 0 ? (
+        <Notification />
+      ) : (
+        <Feedback feedback={typesFeedback} total={totalFeedback}/>
+      )}    
     </>
   )
 }

@@ -1,13 +1,13 @@
+import css from '../Feedback/Feedback.module.css'
 
-
-export default function Feedback({ good, neutral, bad, total }){
+export default function Feedback({ feedback: {good, neutral, bad }, total }){
     return(
-        <div>
+        <div className={css.container}>
         <p>Good:{good}</p>
-        <p>Neutral:{neutral}</p>
-        <p>Bad:{bad}</p>
-        <p>Total:{total}</p>
-        <p>Positive:{Math.round((good / total) * 100)}%</p>
+        <p className={css.stat}>Neutral:{neutral}</p>
+        <p className={css.stat}>Bad:{bad}</p>
+        <p className={css.stat}>Total:{total}</p>
+        <p className={css.stat}>Positive:{Math.round((good / total) * 100)}%</p>
         </div>
     )
     }
